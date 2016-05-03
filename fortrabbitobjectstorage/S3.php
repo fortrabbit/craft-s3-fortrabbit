@@ -1612,13 +1612,13 @@ class S3
      *
      * http://docs.amazonwebservices.com/AmazonCloudFront/latest/APIReference/ListInvalidation.html
      * returned array looks like this:
-     *	Array
-     *	(
-     *		[I31TWB0CN9V6XD] => InProgress
-     *		[IT3TFE31M0IHZ] => Completed
-     *		[I12HK7MPO1UQDA] => Completed
-     *		[I1IA7R6JKTC3L2] => Completed
-     *	)
+     *  Array
+     *  (
+     *      [I31TWB0CN9V6XD] => InProgress
+     *      [IT3TFE31M0IHZ] => Completed
+     *      [I12HK7MPO1UQDA] => Completed
+     *      [I1IA7R6JKTC3L2] => Completed
+     *  )
      *
      * @param string $distributionId Distribution ID from listDistributions()
      * @return array
@@ -1985,9 +1985,9 @@ final class S3Request
         $this->uri = $uri !== '' ? '/'.str_replace('%2F', '/', rawurlencode($uri)) : '/';
 
         //if ($this->bucket !== '')
-        //	$this->resource = '/'.$this->bucket.$this->uri;
+        //  $this->resource = '/'.$this->bucket.$this->uri;
         //else
-        //	$this->resource = $this->uri;
+        //  $this->resource = $this->uri;
 
         if ($this->bucket !== '')
         {
@@ -2091,15 +2091,13 @@ final class S3Request
         // Basic setup
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_USERAGENT, 'S3/php');
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
 
         if (S3::$useSSL)
         {
             // SSL Validation can now be optional for those with broken OpenSSL installations
             curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, S3::$useSSLValidation ? 2 : 0);
-            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, S3::$useSSLValidation ? 1 : 0);
-            //curl_setopt($curl, CURLOPT_SSLVERSION, CURL_SSLVERSION_TLSv1);
-            //curl_setopt($curl, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4);
-
+  
             if (S3::$sslKey !== null) curl_setopt($curl, CURLOPT_SSLKEY, S3::$sslKey);
             if (S3::$sslCert !== null) curl_setopt($curl, CURLOPT_SSLCERT, S3::$sslCert);
             if (S3::$sslCACert !== null) curl_setopt($curl, CURLOPT_CAINFO, S3::$sslCACert);
