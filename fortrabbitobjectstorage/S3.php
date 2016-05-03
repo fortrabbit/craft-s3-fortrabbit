@@ -187,7 +187,7 @@ class S3
         if ($accessKey !== null && $secretKey !== null)
             self::setAuth($accessKey, $secretKey);
         self::$useSSL = $useSSL;
-        self::$endpoint = craft()->config->get('endpoint', 'fortrabbitobjectstorage');
+        self::$endpoint = \Craft\craft()->config->get('endpoint', 'fortrabbitobjectstorage');
     }
 
 
@@ -2085,10 +2085,8 @@ final class S3Request
                 array_key_exists('logging', $this->parameters))
                 $this->resource .= $query;
         }
-        $url = (S3::$useSSL ? 'https://' : 'http://') . ($this->headers['Host'] !== '' ? $this->headers['Host'] : $this->endpoint) . $this->uri;
+        $url = 'https://' . ($this->headers['Host'] !== '' ? $this->headers['Host'] : $this->endpoint) . $this->uri;
 
-
-        //die(var_dump('bucket: ' . $this->bucket, 'uri: ' . $this->uri, 'resource: ' . $this->resource, 'url: ' . $url . ' endpoint:' . $this->endpoint));
 
         // Basic setup
         $curl = curl_init();
@@ -2099,6 +2097,8 @@ final class S3Request
             // SSL Validation can now be optional for those with broken OpenSSL installations
             curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, S3::$useSSLValidation ? 2 : 0);
             curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, S3::$useSSLValidation ? 1 : 0);
+            //curl_setopt($curl, CURLOPT_SSLVERSION, CURL_SSLVERSION_TLSv1);
+            //curl_setopt($curl, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4);
 
             if (S3::$sslKey !== null) curl_setopt($curl, CURLOPT_SSLKEY, S3::$sslKey);
             if (S3::$sslCert !== null) curl_setopt($curl, CURLOPT_SSLCERT, S3::$sslCert);
