@@ -26,4 +26,14 @@ US: `ssh git@deploy.us1.frbit.com secrets {your-app} object_storage`
 
 ## API Endpoint
 
-Per default the plugin uses the API endpoint of fortrabbit's EU region. If your App runs in the US region, copy `fortrabbitobjectstorage/config.php` to `craft/config/fortrabbitobjectstorage.php` and change the endpoint. 
+Per default the plugin uses the API endpoint of fortrabbit's EU region. If your App runs in the US region, copy `fortrabbitobjectstorage/config.php` to `craft/config/fortrabbitobjectstorage.php` and change the endpoint.
+
+
+## Using Image Transforms in Twig
+
+Craft supports two ways to generate different sizes for your image assets: before page load and after via additional ajax requests to `domain.com/cpresources/transforms/{assetID}?x={token}`. Unfortunately with resource requests no plugin get's loaded. This means the modified S3 client we provide is not used. There are two ways to fix it:
+
+1. Set `generateTransformsBeforePageLoad` to `true` in your `config/general.php`
+2. Or include our modified S3 client very early, e.g. at the top in your `config/general.php`, like so ` 	require_once('../craft/plugins/fortrabbitobjectstorage/S3.php');`
+
+`generateTransformsBeforePageLoad => true` works if you deal with some image transforms per page. Only the first unlucky user waits a little longer. The second way feels a bit hacky, but it works no matter how many images you transform.

@@ -24,7 +24,7 @@ class FortrabbitObjectStoragePlugin extends BasePlugin
      */
     public function getVersion()
     {
-        return '0.1';
+        return '0.2';
     }
 
     /**
@@ -58,7 +58,9 @@ class FortrabbitObjectStoragePlugin extends BasePlugin
     public function init()
     {
         // Use a modified S3 class
-        require __DIR__ . '/S3.php';
+        if (!class_exists('S3')) {
+            require_once(__DIR__ . '/S3.php');
+        }
 
         // Catch the getS3Buckets AJAX call action and return custom response
         if (craft()->request->pathInfo == 'admin/actions/assetSources/getS3Buckets') {
