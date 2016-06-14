@@ -9,7 +9,7 @@ Plugin changes the default API endpoint of Craft's S3-AssetSource.
 2. Go to Settings > Plugins from your Craft control panel and install the "Support for fortrabbit Object Storage" plugin.
 3. Go to Settings > Assets and click the "New asset source" button.
 4. Select a *Amazon S3*
-5. Enter your *Access Key* and *Secret Access*
+5. Enter your *Access Key ID (KEY)* and *Secret Access Key (SECRET)*
 6. Hit *Refesh* to get the bucket
 7. Save
 
