@@ -2,6 +2,10 @@
 
 Plugin changes the default API endpoint of Craft's S3-AssetSource.
 
+## Requirements
+
+This plugin requires Craft CMS 2. There is another NEWER plugin to provide this for the Craft 3 over [here](https://github.com/fortrabbit/craft-object-storage).
+
 
 ## Quickstart
 
